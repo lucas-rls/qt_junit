@@ -1,7 +1,9 @@
 package calculadora;
 
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -21,7 +23,7 @@ public class CalculadoraTest {
 		calc = new Calculadora();
 	}
 	
-	@DisplayName("Testa a soma de dois números")
+	@DisplayName("Testa a soma de dois nï¿½meros")
 	@Test
 	public void testSomaDoisNumeros() {
 		int soma = calc.soma(4, 5);		
@@ -35,10 +37,28 @@ public class CalculadoraTest {
 	}
 	
 	@Test
+	public void testMultiplicacaoDoisNumeros() {
+		int multiplicacao = calc.multiplicacao(6, 5);
+		assertTrue(multiplicacao == 30);
+	}
+	
+	@Test
+	public void testSomatoria() {
+		int somatorio = calc.somatoria(6);
+		assertTrue(somatorio == 21);
+	}
+	
+	@Test
+	public void testSomatoriaDe0() {
+		int somatorio = calc.somatoria(0);
+		assertTrue(somatorio == 0);
+	}
+	
+	@Test
 	public void testDivisaoPorZero() {
 		try {
 			int divisao = calc.divisao(8, 0);
-			fail("Exceção não lançada");
+			fail("Exceï¿½ï¿½o nï¿½o lanï¿½ada");
 		}catch (ArithmeticException e) {
 			assertEquals("/ by zero", e.getMessage());
 		}		
@@ -48,6 +68,30 @@ public class CalculadoraTest {
 	public void testDivisaoPorZeroComAssertThrows() {
 		assertThrows(ArithmeticException.class,
 				() -> calc.divisao(8, 0));
+	}
+	
+	@Test
+	public void testEhPositivo() {
+		boolean result1 = calc.ehPositivo(0);
+		boolean result2 = calc.ehPositivo(2);
+		boolean result3 = calc.ehPositivo(-3);
+		assertAll("positivo",
+				() -> assertTrue(result1),
+				() -> assertTrue(result2),
+				() -> assertFalse(result3)
+				);
+	}
+	
+	@Test
+	public void testCompara() {
+		int result1 = calc.compara(2,2);
+		int result2 = calc.compara(5, 3);
+		int result3 = calc.compara(-3, 20);
+		assertAll("positivo",
+				() -> assertEquals(0, result1),
+				() -> assertEquals(1, result2),
+				() -> assertEquals(-1, result3)
+				);
 	}
 
 }
